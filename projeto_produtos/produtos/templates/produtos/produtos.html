@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJango - Index</title>
+</head>
+<body>
+    <h1>Index</h1>
+    
+    <h2> {{ frase }}</h2>
+    <h3> {{ nome }}</h3>
+    <p> {{ idade }}</p>
+
+    {% for produto in produtos %}
+
+    <p> {{ produto.nome }} </p>
+    <p> {{ produto.preco }} </p>
+    <p> {{ produto.estoque }} </p>
+
+    {% endfor %}
+
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+        </tr>
+        {% for produto in produtos %}
+        <tr>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.preco }}</td>
+            <td>{{ produto.estoque }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
