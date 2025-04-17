@@ -7,30 +7,18 @@
 </head>
 <body>
     <h1>Index</h1>
-    
-    <h2> {{ frase }}</h2>
-    <h3> {{ nome }}</h3>
-    <p> {{ idade }}</p>
-
-    {% for produto in produtos %}
-
-    <p> {{ produto.nome }} </p>
-    <p> {{ produto.preco }} </p>
-    <p> {{ produto.estoque }} </p>
-
-    {% endfor %}
 
     <table border="1">
         <tr>
             <th>Nome</th>
             <th>Preço</th>
-            <th>Estoque</th>
+            <th>Descricao</th>
         </tr>
         {% for produto in produtos %}
         <tr>
-            <td>{{ produto.nome }}</td>
+            <td><a href="{% url 'url_produto_detalhes' produto.id %}"> {{ produto.nome }} </a></td>
             <td>{{ produto.preco }}</td>
-            <td>{{ produto.estoque }}</td>
+            <td>{{ produto.descricao }}</td>
         </tr>
         {% endfor %}
     </table>
