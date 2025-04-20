@@ -6,6 +6,23 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Detalhes de cada cliente</h1>
+    <h1>Detalhes do {{ cliente.nome }} {{ cliente.Sobrenome }}</h1>
+    <p><strong>Nome:</strong> {{ cliente.nome }}</p>
+    <p><strong>Sobrenome:</strong> {{ cliente.Sobrenome }}</p>
+    <p><strong>CPF:</strong> {{ cliente.cpf_cliente }}</p>
+    <p><strong>Gênero:</strong> {{ cliente.genero }}</p>
+    <p><strong>Estado Civil:</strong> {{ cliente.estado_civil }}</p>
+    <p><strong>Telefone:</strong> {{ cliente.telefone }}</p>
+    <p><strong>Email:</strong> {{ cliente.email }}</p>
+    <p><strong>Rua:</strong> {{ endereco.rua }}</p>
+    <p><strong>Número:</strong> {{ endereco.numero }}</p>
+    <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
+    <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
+    <p><strong>Cidade:</strong> {{ endereco.cidade }}</p>
+    <p><strong>Estado:</strong> {{ endereco.estado }}</p>
+    <p><strong>CEP:</strong> {{ endereco.cep }}</p>
+    <a href="{% url 'lista_clientes' %}">Voltar para a lista de clientes</a><br>
+    <a href="{% url 'index' %}">Voltar para o index</a>
+    
 </body>
 </html>
