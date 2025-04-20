@@ -13,11 +13,8 @@ class Cliente(models.Model):
     email = models.EmailField()
     data_hora_cadastro = models.DateTimeField(auto_now_add=True)
 
-    
     def __str__(self):
         return f'{self.nome} {self.Sobrenome}'
-    
-    
 
 
 class Endereco(models.Model):
