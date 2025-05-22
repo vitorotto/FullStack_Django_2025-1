@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import Aluno, Curso
 from .forms import CursoForm, AlunoForm
 from django.shortcuts import redirect
+from django.contrib import messages
+from django.db.models import RestrictedError
+
 
 # Create your views here.
 
@@ -11,9 +14,19 @@ def index(request):
 
 
 def alunos(request):
-    alunos = Aluno.objects.all()
+    alunos = Aluno.objects.filter(ativo=True)
     dados = {
         'alunos': alunos,
+        'ativos': True,
+    }
+    return render(request, 'academico/lista_alunos.html', dados)
+
+
+def alunos_inativos(request):
+    alunos = Aluno.objects.filter(ativo=False)
+    dados = {
+        'alunos': alunos,
+        'ativos': False,
     }
     return render(request, 'academico/lista_alunos.html', dados)
 
@@ -49,8 +62,9 @@ def cadastrar_curso(request):
             # is_valid() Vai validar os dados, o Tokken CSRF, e criar um
             # dicionário com os dados chamado cleaned_data
             # Aqui estamos pegando o nome do curso
-            curso = form.cleaned_data['nome']
-            print(curso)
+            nome = form.cleaned_data['nome'].title()
+            form.instance.nome = nome
+            print(nome)
             form.save()
             return redirect('cursos')  # Redireciona para a lista de cursos
     else:
@@ -109,3 +123,47 @@ def editar_curso(request, id):
     }
 
     return render(request, 'academico/editar_curso.html', dados)
+
+
+def excluir_curso(request, id):
+    try:
+        curso = Curso.objects.get(id=id)
+        curso.delete()
+    except:
+        return redirect('cursos')
+
+    curso = Curso.objects.all()
+    dados = {
+        'cursos': curso,
+    }
+    return render(request, 'academico/lista_cursos.html', dados)
+
+
+def excluir_aluno(request, id):
+    try:
+        aluno = Aluno.objects.get(id=id)
+        aluno.ativo = False
+        aluno.save()
+        messages.success(request, "Aluno excluído com sucesso.")
+    except Aluno.DoesNotExist:
+        messages.error(request, "Aluno não encontrado.")
+
+    return redirect('alunos')
+
+
+def ativar_aluno(request, id):
+    try:
+        aluno = Aluno.objects.get(id=id)
+    except Aluno.DoesNotExist:
+        messages.error(request, "Aluno não encontrado.")
+        return redirect('alunos_inativos')
+
+    if aluno.ativo == False:
+        aluno.ativo = True
+        aluno.save()
+        messages.success(request, "Aluno reativado com sucesso.")
+        
+    else:
+        messages.info(request, "O aluno já está ativo.")
+
+    return redirect('alunos_inativos')

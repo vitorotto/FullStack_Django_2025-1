@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Alunos</title>
+    <title>Lista de Cursos</title>
 </head>
 <body>
-    <h1>Lista de Alunos</h1>
+    <h1>Lista de Cursos</h1>
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
     <table border="1" cellpadding="5" cellspacing="3">
         <tr>
             <th>Nome</th>
@@ -15,10 +27,16 @@
         {% for curso in cursos %}
         <tr>
             <td>{{ curso.nome }}</td>
-            <td><a href="{% url 'editar_curso' curso.id %}">Editar</a></td>
+            <td>
+                <a href="{% url 'editar_curso' curso.id %}">Editar</a>
+                <a href="{% url 'excluir_curso' curso.id %}">Excluir</a>
+            </td>
+            
         
         </tr>
         {% endfor %}
     </table>
+    <br>
+    <a href="{% url 'index' %}">Voltar para o menu</a>
 </body>
 </html>
